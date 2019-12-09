@@ -50,6 +50,7 @@ class WxController extends Controller
     {
         // 获取assecc_token:(https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxe10b6a253c208edb&secret=0b5c451ab2ee2724d44b177a49bedb4b)
         $openID="https://api.weixin.qq.com/cgi-bin/user/info?access_token=28_DwDxtY9cyoMRfRLFxITJwF4vPIBG5-gH51BYIuVXUMx4Pri6gL8B-FcYZMJm8CCvEXfn3ldS1JXSVM82GQLRTALhhqCVTAoU7oku3MRDvcbbCdCWeaZ07h63GVgCNGcACAYJC&openid=oYtxIt0WcMTSZnseMC_IMOMlXe1M&lang=zh_CN"; //用户基本信息
+        // dd($openid);
     }
     
 }
