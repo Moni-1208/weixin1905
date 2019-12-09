@@ -28,10 +28,10 @@ Route::get('test/phpinfo',"Test\TestController@phpinfo");
 Route::get('test/baidu',"Test\TestController@baidu");
 
 // 微信接口测试
-Route::get('wx',"wx\WxController@wechat");
+Route::get('wx',"weixin\WxController@wechat");
 
 // 接受微信推送事件
-Route::post('wx/receiv',"wx\WxController@receiv");
+Route::post('wx/receiv',"weixin\WxController@receiv");
 
 // 获取用户基本信息（openID）
-Route::get('wx/openID',"wx\WxController@openID");
+Route::get('wx/openID',"weixin\WxController@openID");
