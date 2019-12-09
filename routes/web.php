@@ -27,6 +27,9 @@ Route::get('test/phpinfo',"Test\TestController@phpinfo");
 // 访问百度
 Route::get('test/baidu',"Test\TestController@baidu");
 
+// 测试字符串转数组
+Route::get('test/xmlTest',"Test\TestController@xmlTest");
+
 // 微信接口测试
 Route::get('/wx',"Weixin\WxController@wechat");
 
@@ -34,4 +37,4 @@ Route::get('/wx',"Weixin\WxController@wechat");
 Route::post('/wx',"Weixin\WxController@receiv");
 
 // 获取用户基本信息（openID）
-Route::get('wx/openID',"Weixin\WxController@openID");
+Route::get('wx/getUserInfo',"Weixin\WxController@getUserInfo");

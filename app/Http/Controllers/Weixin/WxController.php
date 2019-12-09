@@ -7,6 +7,22 @@ use Illuminate\Http\Request;
 
 class WxController extends Controller
 {
+    protected $access_token;
+    
+    public function _contruct()
+    {
+        // 获取access_token
+        $this->$access_token=$this->getAccessToken;
+    }
+
+    protected function getAccessToken()
+    {
+        $url='https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.env('WX_APPID').'&secret='.env('WX_APPSECRET');
+        $data_json=file_get_contents($url); // 返回json类型
+        $arr=json_decode($data_json,true);
+        return $arr['access_token'];
+    }
+
     // 微信接口测试
         public function wechat()
     {
@@ -39,21 +55,41 @@ class WxController extends Controller
         // 将接收的数据记录到日志文件
         $log_file="wx.log";
         // 接收日志
-        $xml=file_get_contents("php://input");
+        $xml_str=file_get_contents("php://input");
         // $data=date('y-m-d h:i:s').json_encode($_POST);
-        $data=date('y-m-d h:i:s').$xml;
+        $data=date('y-m-d h:i:s').$xml_str;
         file_put_contents($log_file,$data,FILE_APPEND); //追加写
+        // 处理xml数据
+        $xml_obj=simplexml_load_string($xml_str);
+
+        // 入库
+        
+        // 获取事件的类型
+        $event=$xml_obj->Event;   
+        if($event=='subscribe'){
+            // 获取用户的opendID
+            $openid=$xml_obj->FromUserName;
+            // 获取用户信息
+            $url='https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->$access_token.'&openid='.$openid.'&lang=zh_CN';
+            $user_info=file_get_contents($url); // 返回json数据类型
+            file_put_contents('wx_user.log',$user_info,FILE_APPEND);
+        }
+
+
     }
 
 
     /**
      * 获取用户基本信息（openID）
      */
-    public function openID()
+    public function getUserInfo($access_token,$openid)
     {
         // 获取assecc_token:(https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxe10b6a253c208edb&secret=0b5c451ab2ee2724d44b177a49bedb4b)
-        $openID="https://api.weixin.qq.com/cgi-bin/user/info?access_token=28_DwDxtY9cyoMRfRLFxITJwF4vPIBG5-gH51BYIuVXUMx4Pri6gL8B-FcYZMJm8CCvEXfn3ldS1JXSVM82GQLRTALhhqCVTAoU7oku3MRDvcbbCdCWeaZ07h63GVgCNGcACAYJC&openid=oYtxIt0WcMTSZnseMC_IMOMlXe1M&lang=zh_CN"; //用户基本信息
-        // dd($openid);
+        $url='https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$access_token.'&openid='.$openid.'&lang=zh_CN'; //用户基本信息
+        // 发送网络请求
+        $json_str=file_get_contents($url);
+        $simplexml_load_string='wx_user.log';
+        file_get_contents($log_file.$json_str,FILE_APPEND);
     }
     
 }
