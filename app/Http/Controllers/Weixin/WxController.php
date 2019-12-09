@@ -39,7 +39,7 @@ class WxController extends Controller
         // 将接收的数据记录到日志文件
         $log_file="wx.log";
         $data=json_encode($_POST);
-        file_put_contents($log_file, $data,FILE_APPEND); //追加写
+        file_put_contents($log_file,$data,FILE_APPEND); //追加写
     }
 
 

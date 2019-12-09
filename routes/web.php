@@ -31,8 +31,7 @@ Route::get('test/baidu',"Test\TestController@baidu");
 Route::get('wx',"wx\TestController@wechat");
 
 // 接受微信推送事件
-Route::get('wx/receiv',"wx\TestController@receiv");
+Route::post('wx/receiv',"wx\TestController@receiv");
 
 // 获取用户基本信息（openID）
-Route::post('wx/openID',"wx\TestController@openID");
-
+Route::get('wx/openID',"wx\TestController@openID");
