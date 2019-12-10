@@ -67,7 +67,6 @@ class WxController extends Controller
         // 入库
         
         // 获取事件的类型
-        if ($xml_obj->MsgType=='Event') {
             $event=$xml_obj->Event;   
             if($event=='subscribe'){
                 // 获取用户的opendID
@@ -77,7 +76,6 @@ class WxController extends Controller
                 $user_info=file_get_contents($url); // 返回json数据类型
                 file_put_contents('wx_user.log',$user_info,FILE_APPEND);
             }
-        }
        
 
         // 判断消息类型
