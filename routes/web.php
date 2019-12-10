@@ -31,7 +31,7 @@ Route::get('test/baidu',"Test\TestController@baidu");
 Route::get('test/xmlTest',"Test\TestController@xmlTest");
 
 // 微信接口测试
-Route::get('/wx',"Weixin\WxController@wechat");
+// Route::get('/wx',"Weixin\WxController@wechat");
 
 // 接受微信推送事件
 Route::post('/wx',"Weixin\WxController@receiv");

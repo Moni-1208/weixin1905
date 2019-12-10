@@ -75,6 +75,26 @@ class WxController extends Controller
             file_put_contents('wx_user.log',$user_info,FILE_APPEND);
         }
 
+        // 判断消息类型
+        $msg_type=$xml_obj->MsgType;
+        // 接收消息的用户opendid
+        $touser=$xml_obj->FromUserName;
+        // 开发者公众号的ID
+        $fromuser=$xml_obj->ToUserName;
+
+        $time=time();
+        if($msg_type=='text'){
+            $content = date('Y-m-d H:i:s') . $xml_obj->Content;
+            $response_text = '<xml>
+                              <ToUserName><![CDATA['.$touser.']]></ToUserName>
+                              <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
+                              <CreateTime>'.$time.'</CreateTime>
+                              <MsgType><![CDATA[text]]></MsgType>
+                              <Content><![CDATA['.$content.']]></Content>
+                            </xml>';
+            echo $response_text;            // 回复用户消息
+        }
+
 
     }
 
