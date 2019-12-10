@@ -45,4 +45,23 @@ class TestController extends Controller
 		echo 'FromUserName'.$xml_obj->FromUserName;echo '<br>';
 	}
 
+
+
+	/**
+	 * 点我啊
+	 */
+	public function add()
+	{
+		return view('test.index');
+	}
+
+
+
+
+
+
+
+
+
+
 }

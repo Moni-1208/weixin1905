@@ -15,6 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// 点我
+Route::get('test/add',"Test\TestController@add");
+
 // hello
 Route::get('test/hello',"Test\TestController@hello");
 

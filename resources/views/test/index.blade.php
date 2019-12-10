@@ -81,22 +81,17 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    爱心发射 biu biu biu！
+                    想你！ 么么哒······
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-                    &nbsp
-                <div class="links">
-                    <a href="{{url('test/add')}}">点我啊😉</a>
+                    锦瑟无端五十弦，一弦一柱思华年。
+
+                    庄生晓梦迷蝴蝶，望帝春心托杜鹃。
+
+                    沧海月明珠有泪，蓝田日暖玉生烟。
+
+                    此情可待成追忆，只是当时已惘然。
                 </div>
             </div>
         </div>
