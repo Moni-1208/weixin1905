@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    爱心发射 biu biu biu！
                 </div>
 
                 <div class="links">

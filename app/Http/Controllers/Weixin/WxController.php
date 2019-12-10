@@ -23,7 +23,9 @@ class WxController extends Controller
         return $arr['access_token'];
     }
 
-    // 微信接口测试
+    /**
+     * 微信接口测试
+     */
         public function wechat()
     {
         $token = 'qwertyuiopzxcvbnm';       //开发提前设置好的 token
@@ -92,7 +94,7 @@ class WxController extends Controller
                               <MsgType><![CDATA[text]]></MsgType>
                               <Content><![CDATA['.$content.']]></Content>
                             </xml>';
-            echo $response_text;            // 回复用户消息
+            echo $response_text;            // 回复用户消息返回发送过来的文本消息
         }
 
 
