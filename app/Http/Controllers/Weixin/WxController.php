@@ -67,15 +67,18 @@ class WxController extends Controller
         // 入库
         
         // 获取事件的类型
-        $event=$xml_obj->Event;   
-        if($event=='subscribe'){
-            // 获取用户的opendID
-            $openid=$xml_obj->FromUserName;
-            // 获取用户信息
-            $url='https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->$access_token.'&openid='.$openid.'&lang=zh_CN';
-            $user_info=file_get_contents($url); // 返回json数据类型
-            file_put_contents('wx_user.log',$user_info,FILE_APPEND);
+        if ($xml_obj->MsgType=='Event') {
+            $event=$xml_obj->Event;   
+            if($event=='subscribe'){
+                // 获取用户的opendID
+                $openid=$xml_obj->FromUserName;
+                // 获取用户信息
+                $url='https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->$access_token.'&openid='.$openid.'&lang=zh_CN';
+                $user_info=file_get_contents($url); // 返回json数据类型
+                file_put_contents('wx_user.log',$user_info,FILE_APPEND);
+            }
         }
+       
 
         // 判断消息类型
         $msg_type=$xml_obj->MsgType;
