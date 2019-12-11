@@ -115,10 +115,7 @@ class WxController extends Controller
         file_get_contents($log_file.$json_str,FILE_APPEND);
     }
     public function textinfo(){
-            $url='https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxe10b6a253c208edb&secret=0b5c451ab2ee2724d44b177a49bedb4b';
-        $data_json=file_get_contents($url); // 返回json类型
-        $arr=json_decode($data_json,true);
-        dd($arr);exit;
+
 
 
         $xml_str='<xml><ToUserName><![CDATA[gh_0080c841f4bb]]></ToUserName>
@@ -128,7 +125,14 @@ class WxController extends Controller
                         <Event><![CDATA[subscribe]]></Event>
                         <EventKey><![CDATA[]]></EventKey>
                 </xml>';
-                 $xml_obj=simplexml_load_string($xml_str);
+        $xml_obj=simplexml_load_string($xml_str);
+        $openid=$xml_obj->FromUserName;
+           $url='https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->access_token.'&openid='.$openid.'&lang=zh_CN';
+        $data_json=file_get_contents($url); // 返回json类型
+        $arr=json_decode($data_json,true);
+        dd($arr);exit;
+
+                 
                  $openid=$xml_obj->FromUserName;
                  $access_token=$this->access_token;
                  dd($access_token);
