@@ -38,6 +38,8 @@ Route::get('/wx',"Weixin\WxController@wechat");
 
 // 接受微信推送事件
 Route::post('/wx',"Weixin\WxController@receiv");
+//微信测试
+Route::get('/textinfo',"Weixin\WxController@textinfo");
 
 // 获取用户基本信息（openID）
 Route::get('wx/getUserInfo',"Weixin\WxController@getUserInfo");

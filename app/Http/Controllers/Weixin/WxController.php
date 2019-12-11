@@ -9,15 +9,15 @@ class WxController extends Controller
 {
     protected $access_token;
     
-    public function __contruct()
+    public function __construct()
     {
         // 获取access_token
-        $this->$access_token=$this->getAccessToken;
+         $this->access_token=$this->getAccessToken();
     }
 
     protected function getAccessToken()
     {
-        $url='https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.env('WX_APPID').'&secret='.env('WX_APPSECRET');
+        $url='https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxe10b6a253c208edb&secret=0b5c451ab2ee2724d44b177a49bedb4b';
         $data_json=file_get_contents($url); // 返回json类型
         $arr=json_decode($data_json,true);
         return $arr['access_token'];
@@ -72,7 +72,7 @@ class WxController extends Controller
                 // 获取用户的opendID
                 $openid=$xml_obj->FromUserName;
                 // 获取用户信息
-                $url='https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->$access_token.'&openid='.$openid.'&lang=zh_CN';
+                $url='https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->access_token.'&openid='.$openid.'&lang=zh_CN';
                 $user_info=file_get_contents($url); // 返回json数据类型
                 file_put_contents('wx_user.log',$user_info,FILE_APPEND);
             }
@@ -113,6 +113,32 @@ class WxController extends Controller
         $json_str=file_get_contents($url);
         $simplexml_load_string='wx_user.log';
         file_get_contents($log_file.$json_str,FILE_APPEND);
+    }
+    public function textinfo(){
+
+
+
+        $xml_str='<xml><ToUserName><![CDATA[gh_0080c841f4bb]]></ToUserName>
+                        <FromUserName><![CDATA[oYtxIt0WcMTSZnseMC_IMOMlXe1M]]></FromUserName>
+                        <CreateTime>1575893487</CreateTime>
+                        <MsgType><![CDATA[event]]></MsgType>
+                        <Event><![CDATA[subscribe]]></Event>
+                        <EventKey><![CDATA[]]></EventKey>
+                </xml>';
+        $xml_obj=simplexml_load_string($xml_str);
+        $openid=$xml_obj->FromUserName;
+           $url='https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->access_token.'&openid='.$openid.'&lang=zh_CN';
+        $data_json=file_get_contents($url); // 返回json类型
+        $arr=json_decode($data_json,true);
+        dd($arr);exit;
+
+                 
+                 $openid=$xml_obj->FromUserName;
+                 $access_token=$this->access_token;
+                 dd($access_token);
+                  $url='https://api.weixin.qq.com/cgi-bin/user/info?access_token='.'&openid='.$openid.'&lang=zh_CN'; //用户基本信息
+        // 发送网络请求
+            echo $json_str=file_get_contents($url);
     }
     
 }
