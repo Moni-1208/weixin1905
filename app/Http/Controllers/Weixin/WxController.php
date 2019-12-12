@@ -66,7 +66,7 @@ class WxController extends Controller
         // 处理xml数据
         $xml_obj=simplexml_load_string($xml_str);
 
-        // 入库
+        // 入库   手动阀手动阀
         
         // 获取事件的类型
             $event=$xml_obj->Event;   
