@@ -76,18 +76,48 @@ class WxController extends Controller
                 // 判断用户是否已存在
                 $u=WxUserModel::where(['openid'=>$openid])->first();
                 if($u){
+                	// 判断消息类型
+			        $msg_type=$xml_obj->MsgType;
+			        // 接收消息的用户opendid
+			        $touser=$xml_obj->FromUserName;
+			        // 开发者公众号的ID
+			        $fromuser=$xml_obj->ToUserName;
+			        $time=time();
                 	// TODO 欢迎回来
-                	echo "欢迎回来"; 
+                	$content = date('Y-m-d H:i:s') . "欢迎回来";
+		            $response_text = '<xml>
+		                              <ToUserName><![CDATA['.$touser.']]></ToUserName>
+		                              <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
+		                              <CreateTime>'.$time.'</CreateTime>
+		                              <MsgType><![CDATA[text]]></MsgType>
+		                              <Content><![CDATA['.$content.']]></Content>
+		                            </xml>';
+            		echo $response_text; 
                 }else{
                 	$user_data=[
-            		'openid'=>$openid,
-            		'sub_time'=>$xml_obj->CreateTime,
+	            		'openid'=>$openid,
+	            		'sub_time'=>$xml_obj->CreateTime,
 	            	];
 
 	            	// openid 入库
 	                $uid=WxUserModel::insertGetId($user_data);
-	                var_dump($uid);
-	                die;
+	                // 判断消息类型
+			        $msg_type=$xml_obj->MsgType;
+			        // 接收消息的用户opendid
+			        $touser=$xml_obj->FromUserName;
+			        // 开发者公众号的ID
+			        $fromuser=$xml_obj->ToUserName;
+			        $time=time();
+                	// TODO 欢迎关注
+                	$content = date('Y-m-d H:i:s') . "欢迎关注";
+		            $response_text = '<xml>
+		                              <ToUserName><![CDATA['.$touser.']]></ToUserName>
+		                              <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
+		                              <CreateTime>'.$time.'</CreateTime>
+		                              <MsgType><![CDATA[text]]></MsgType>
+		                              <Content><![CDATA['.$content.']]></Content>
+		                            </xml>';
+            		echo $response_text;
                 }
             	
 
