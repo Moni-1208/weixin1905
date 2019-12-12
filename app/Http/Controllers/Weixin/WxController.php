@@ -94,6 +94,15 @@ class WxController extends Controller
 		                            </xml>';
             		echo $response_text; 
                 }else{
+                     // 获取用户信息
+                    $url='https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->access_token.'&openid='.$openid.'&lang=zh_CN';
+                    $user_info=file_get_contents($url); // 返回json数据类型
+                    // 测试用  换行
+                    $log_content==data('Y-m-d H:i:s'). '>>>>' .$user_info . "\n";
+                    file_put_contents('wx_user.log',$log_content,FILE_APPEND);
+                    // 转数组
+                    // $user_info_arr = json_encode($user_info,true);
+
                 	$user_data=[
 	            		'openid'=>$openid,
 	            		'sub_time'=>$xml_obj->CreateTime,
@@ -109,7 +118,7 @@ class WxController extends Controller
 			        $fromuser=$xml_obj->ToUserName;
 			        $time=time();
                 	// TODO 欢迎关注
-                	$content = "欢迎关注，以后就有我陪着你了！";
+                	$content = "欢迎关注，以后就有我陪你了！";
 		            $response_text = '<xml>
 		                              <ToUserName><![CDATA['.$touser.']]></ToUserName>
 		                              <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
@@ -121,10 +130,7 @@ class WxController extends Controller
                 }
             	
 
-                // 获取用户信息
-                $url='https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->access_token.'&openid='.$openid.'&lang=zh_CN';
-                $user_info=file_get_contents($url); // 返回json数据类型
-                file_put_contents('wx_user.log',$user_info,FILE_APPEND);
+               
             }
        
 
@@ -164,6 +170,7 @@ class WxController extends Controller
         $simplexml_load_string='wx_user.log';
         file_get_contents($log_file.$json_str,FILE_APPEND);
     }
+
     public function textinfo(){
 
 
