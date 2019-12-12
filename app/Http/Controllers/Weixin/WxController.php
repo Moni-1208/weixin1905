@@ -84,7 +84,7 @@ class WxController extends Controller
 			        $fromuser=$xml_obj->ToUserName;
 			        $time=time();
                 	// TODO 欢迎回来
-                	$content = date('Y-m-d H:i:s') . "欢迎回来";
+                	$content =  "欢迎回来，看来你还是舍不得我！";
 		            $response_text = '<xml>
 		                              <ToUserName><![CDATA['.$touser.']]></ToUserName>
 		                              <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
@@ -109,7 +109,7 @@ class WxController extends Controller
 			        $fromuser=$xml_obj->ToUserName;
 			        $time=time();
                 	// TODO 欢迎关注
-                	$content = date('Y-m-d H:i:s') . "欢迎关注";
+                	$content = "欢迎关注，以后就有我陪着你了！";
 		            $response_text = '<xml>
 		                              <ToUserName><![CDATA['.$touser.']]></ToUserName>
 		                              <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
