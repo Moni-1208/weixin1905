@@ -150,7 +150,7 @@ class WxController extends Controller
   <ToUserName><![CDATA['.$touser.']]></ToUserName>
   <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
   <CreateTime>'.time().'</CreateTime>
-  <MsgType><![CDATA[image]]></MsgType>
+  <MsgType><![CDATA[voice]]></MsgType>
   <Image>
     <MediaId><![CDATA['.$media_id.']]></MediaId>
   </Image>
@@ -164,7 +164,7 @@ class WxController extends Controller
   <ToUserName><![CDATA['.$touser.']]></ToUserName>
   <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
   <CreateTime>'.time().'</CreateTime>
-  <MsgType><![CDATA[image]]></MsgType>
+  <MsgType><![CDATA[video]]></MsgType>
   <Image>
     <MediaId><![CDATA['.$media_id.']]></MediaId>
   </Image>
