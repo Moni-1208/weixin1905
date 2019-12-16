@@ -43,3 +43,12 @@ Route::get('/textinfo',"Weixin\WxController@textinfo");
 
 // 获取用户基本信息（openID）
 Route::get('wx/getUserInfo',"Weixin\WxController@getUserInfo");
+
+// 获取用户基本信息（openID）
+Route::get('wx/getMedia',"Weixin\WxController@getMedia");
+
+// 测试access_token
+Route::get('wx/getAccessToken',"Weixin\WxController@getAccessToken");
+
+// 获取access_token
+Route::get('wx/flushAccessToken',"Weixin\WxController@flushAccessToken");
