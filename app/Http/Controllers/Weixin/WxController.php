@@ -90,7 +90,7 @@ class WxController extends Controller
                     'openid'    => $openid,
                     'nickname'  => $u['nickname'],
                     'sex'       => $u['sex'],
-                    'headimgurl'    => 1,
+                    'headimgurl'    => $u['headimgurl'],
                     'subscribe_time'    => $u['subscribe_time']
                 ];
                 //openid 入库
