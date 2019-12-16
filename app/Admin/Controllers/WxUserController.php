@@ -41,7 +41,7 @@ class WxUserController extends AdminController
             return date('Y-m-d H:i:s',$time);
         });
         $grid->column('headimgurl', __('Headimgurl'))->display(function($img){
-            return '<img src"'.$img.'">';
+            return '<img src="'.$img.'">';
         });
         $grid->column('nickname', __('Nickname'));
         $grid->column('created_at', __('Created at'));
