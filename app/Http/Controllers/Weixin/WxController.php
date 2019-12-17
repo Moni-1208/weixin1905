@@ -111,6 +111,7 @@ class WxController extends Controller
         }
         // 判断消息类型
         $msg_type = $xml_obj->MsgType;
+        echo $msg_type;die;
         $touser = $xml_obj->FromUserName;       //接收消息的用户openid
         $fromuser = $xml_obj->ToUserName;       // 开发者公众号的 ID
         $time = time();
@@ -144,7 +145,7 @@ class WxController extends Controller
   </Image>
 </xml>';
             echo $response;
-        }elseif ($msg_type=='voice') {  // 语音消息
+        }elseif ($msg_type=='voice  ') {  // 语音消息
             // TODO  下载语音
             $this->getMedia2($media_id,$msg_type);
             // TODO  回复语音
@@ -246,6 +247,14 @@ class WxController extends Controller
         $key ='wx_access_token';
         Redis::del($key);
         echo $this->getAccessToken();
+    }
+
+    /**
+     * 创建自定义菜单
+     */
+    public function createMenu()
+    {
+
     }
 
     
