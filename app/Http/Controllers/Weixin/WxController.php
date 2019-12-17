@@ -270,8 +270,8 @@ class WxController extends Controller
                 ],
                 [
                     'type'=>'click',
-                    'name'=>'1905wx3',
-                    'key'=>'1905wx_key'
+                    'name'=>'获取天气',
+                    'key'=>'weather'
                 ]
             ],
         ];
