@@ -15,4 +15,3 @@ routes/web.php
 config/admin.php
 *.swo
 *.swp
-public/wx_media
