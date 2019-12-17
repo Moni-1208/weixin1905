@@ -145,7 +145,7 @@ class WxController extends Controller
   </Image>
 </xml>';
             echo $response;
-        }elseif ($msg_type=='voice  ') {  // 语音消息
+        }elseif ($msg_type=='voice') {  // 语音消息
             // TODO  下载语音
             $this->getMedia2($media_id,$msg_type);
             // TODO  回复语音
@@ -254,7 +254,34 @@ class WxController extends Controller
      */
     public function createMenu()
     {
+        // 创建自定义菜单的接口地址
+        $url='https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$this->access_token;
+        $menu = [
+            'button' => [
+                [
+                    'type'=>'click',
+                    'name'=>'1905wx',
+                    'key'=>'1905wx_key'
+                ],
+                [
+                    'type'=>'click',
+                    'name'=>'1905wx2',
+                    'key'=>'1905wx_key'
+                ],
+                [
+                    'type'=>'click',
+                    'name'=>'1905wx3',
+                    'key'=>'1905wx_key'
+                ]
+            ],
+        ];
+        $menu_json=json_encode($menu);
 
+        $client = new Client();
+        $response=$client->request('post',$url,['body'=>$menu_json]);
+
+        echo '<pre>';print_r($_POST);echo '</pre>';
+        echo $response->getBody(); // 接收微信接口的响应数据
     }
 
     

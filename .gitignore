@@ -11,5 +11,10 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 /public/*.log
+/public/*.jpg
+/public/*.amr
+/public/*.mp4
+routes/web.php
+config/admin.php
 *.swo
 *.swp
