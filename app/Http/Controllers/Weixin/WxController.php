@@ -69,6 +69,7 @@ class WxController extends Controller
             $openid = $xml_obj->FromUserName;       //获取用户的openid
             //判断用户是否已存在
             $u = WxUserModel::where(['openid'=>$openid])->first();
+            // echo $u;die;
             if($u){
                 $msg = '欢迎回来';
                 $xml = '<xml>
@@ -82,6 +83,7 @@ class WxController extends Controller
             }else{
                 //获取用户信息 zcza
                 $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->access_token.'&openid='.$openid.'&lang=zh_CN';
+                // echo $url;die;
                 $user_info = file_get_contents($url);       //
                 $u = json_decode($user_info,true);
                 //echo '<pre>';print_r($u);echo '</pre>';die;

@@ -57,7 +57,7 @@ class WxUserController extends AdminController
      * @return Show
      */
     protected function detail($id)
-    {
+    {   
         $show = new Show(WxUserModel::findOrFail($id));
 
         $show->field('uid', __('Uid'));
