@@ -65,8 +65,8 @@ class WxController extends Controller
         //处理xml数据
         $xml_obj = simplexml_load_string($xml_str);
         $event = $xml_obj->Event;       // 获取事件类型
+        $openid = $xml_obj->FromUserName;       //获取用户的openid
         if($event=='subscribe'){
-            $openid = $xml_obj->FromUserName;       //获取用户的openid
             //判断用户是否已存在
             $u = WxUserModel::where(['openid'=>$openid])->first();
             // echo $u;die;
@@ -107,6 +107,18 @@ class WxController extends Controller
   <Content><![CDATA['.$msg.']]></Content>
 </xml>';
                 echo $xml;
+            }
+        }elseif($event=='CLICK'){  // 菜单点击事件
+            // 获取天气
+            if($xml_obj->EventKey=='weather'){
+                $response_xml='<xml>
+                <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                <FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName>
+                <CreateTime>'.time().'</CreateTime>
+                <MsgType><![CDATA[text]]></MsgType>
+                <Content><![CDATA['.date('Y-m-d H:i:s').'晴天'.']]></Content>
+              </xml>';
+              echo $response_xml;
             }
         }
         // 判断消息类型
@@ -275,7 +287,7 @@ class WxController extends Controller
                 ]
             ],
         ];
-        $menu_json=json_encode($menu);
+        $menu_json=json_encode($menu,JSON_UNESCAPED_UNICODE);
 
         $client = new Client();
         $response=$client->request('post',$url,['body'=>$menu_json]);
