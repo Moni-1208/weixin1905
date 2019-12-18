@@ -115,7 +115,6 @@ class WxController extends Controller
                 $weather_api='https://free-api.heweather.net/s6/weather/now?location=beijing&key=aca710f95e1c4ba4a4ea83152c02b194';
                 $weather_info=file_get_contents($weather_api);
                 $weather_info_arr=json_decode($weather_info,true);
-
                 $cond_txt=$weather_info_arr['HeWeather6'][0]['now']['cond_txt'];
                 // 温度
                 $tmp=$weather_info_arr['HeWeather6'][0]['now']['tmp'];
@@ -133,13 +132,14 @@ class WxController extends Controller
               echo $response_xml;
             }
         }
+
+
         // 判断消息类型
         $msg_type = $xml_obj->MsgType;
         // echo $msg_type;die;
         $touser = $xml_obj->FromUserName;       //接收消息的用户openid
         $fromuser = $xml_obj->ToUserName;       // 开发者公众号的 ID
         $time = time();
-
         $media_id=$xml_obj->MediaId;
         // dd($media_id);die;
         if($msg_type=='text'){
@@ -278,20 +278,21 @@ class WxController extends Controller
      */
     public function createMenu()
     {
+
+        $url='https://open.weixin.qq.com/vote';
+        // 授权后跳转页面
+        $redirect_url=urlencode($url);  
+
         // 创建自定义菜单的接口地址
         $url='https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$this->access_token;
         $menu = [
             'button' => [
                 [
-                    'type'=>'click',
-                    'name'=>'1905wx',
-                    'key'=>'1905wx_key'
+                    'type'=>'view',
+                    'name'=>'首页',
+                    'url'=>'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe10b6a253c208edb&redirect_uri='.urlencode('http://1905dongbaixue.comcto.com').'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
                 ],
-                [
-                    'type'=>'click',
-                    'name'=>'1905wx2',
-                    'key'=>'1905wx_key'
-                ],
+                
                 [
                     'type'=>'click',
                     'name'=>'获取天气',
@@ -304,7 +305,7 @@ class WxController extends Controller
         $client = new Client();
         $response=$client->request('post',$url,['body'=>$menu_json]);
 
-        echo '<pre>';print_r($_POST);echo '</pre>';
+        echo '<pre>'; print_r($menu); echo '</pre>';
         echo $response->getBody(); // 接收微信接口的响应数据
     }
 
