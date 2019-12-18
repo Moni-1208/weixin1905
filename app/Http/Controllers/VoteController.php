@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Redis;
+
 class VoteController extends Controller
 {
     //
@@ -15,6 +17,10 @@ class VoteController extends Controller
     	$data=$this->getAccessToken($code);
     	// 获取用户信息
     	$user_info=$this->getUserInfo($data['access_token'],$data['openid']);
+    	// 处理业务逻辑
+    	$redis_key='vote';
+    	$number = Redis::incr($redis_key); // incr是increment的缩写 自增添加的意思
+    	echo "投票成功,当前票数".$number;
 
     }
 
@@ -35,7 +41,13 @@ class VoteController extends Controller
     {
     	$url='https://api.weixin.qq.com/sns/userinfo?access_token='.$access_token.'&openid='.$openid.'&lang=zh_CN';
     	$json_data=file_get_contents($url);
-    	$user_info=json_decode($json_data,true);
-    	echo'<pre>';print_r($user_info);echo '</pre>';
+    	$data=json_decode($json_data,true);
+    	// echo'<pre>';print_r($user_info);echo '</pre>';
+    	if (isset($data['errcode'])) {
+    		// TODO 错误处理
+    		die("出错了 40001"); // 获取用户信息失败
+    	}
+
+    	return $data;
     }
 }
