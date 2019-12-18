@@ -15,7 +15,7 @@ class VoteController extends Controller
     	$code=$_GET['code'];
     	// 获取access_token
     	$data=$this->getAccessToken($code);
-    	// 获取用户信息
+    	// 获取用户信息 xxx
     	$user_info=$this->getUserInfo($data['access_token'],$data['openid']);
     	// 处理业务逻辑  
     	// TODO 判断是否已经投过  使用redis 集合 或 有序集合
