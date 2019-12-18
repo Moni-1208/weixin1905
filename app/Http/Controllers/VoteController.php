@@ -25,16 +25,10 @@ class VoteController extends Controller
 
     	$members=Redis::members($key);
     	echo'<pre>';print_r($numbers);echo '</pre>'; // 获取所有投票人的openid
-    	$total=Redis::Scard($key);  // 统计投票总人数
+    	$total=Redis::scard($key);  // 统计投票总人数
     	echo "投票总人数：".$total;
     	echo "<hr>";
     	echo '<pre>';print_r($number);echo '</pre>';
-
-    	// 测试代码
-    	// $redis_key='vote';
-    	// $number = Redis::incr($redis_key); // incr是increment的缩写 自增添加的意思
-    	// echo "投票成功,当前票数".$number;
-
     }
 
     /**
