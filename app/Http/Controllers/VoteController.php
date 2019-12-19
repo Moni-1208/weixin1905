@@ -43,7 +43,8 @@ class VoteController extends Controller
     	// foreach 循环用户
     	foreach ($numbers as $k => $v) {
             $u_k='h:u:'.$k;
-    		$u = Redis::hMget($u_k,['openid','nickname','sex','headimgurl']);
+            $u=Redis::hGetAll($u_k);
+    		// $u = Redis::hMget($u_k,['openid','nickname','sex','headimgurl']);
             echo '<img src="'.$u['headimgurl'].'">';
     	}
 
