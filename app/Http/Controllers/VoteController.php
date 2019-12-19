@@ -11,7 +11,7 @@ class VoteController extends Controller
     //
     public function index()
     {
-    	echo'<pre>';print_r($_GET);echo '</pre>';
+    	echo'<pre>'.'接受的GET';print_r($_GET);echo '</pre>';
     	$code=$_GET['code'];
     	// 获取access_token
     	$data=$this->getAccessToken($code);
@@ -30,16 +30,17 @@ class VoteController extends Controller
 	    	Redis::zadd($key,time(),$openid);
     	}
 
-    	$total=Redis::zCard($key); // 获取总人数
-    	echo '<pre>';print_r($total);echo '</pre>';
+    	$total=Redis::zCard($key); // 有序集合获取总人数
+    	// echo '<pre>';print_r($total);echo '</pre>';  //总人数数组打印
     	$numbers=Redis::zRange($key,0,-1,true);
     	echo'<pre>';print_r($numbers);echo '</pre>'; // die; // 获取所有投票人的openid
     	// foreach 是干什么用的？？？
     	foreach ($numbers as $k => $v) {
-    		echo "用户：",$k.'投票时间'.date('Y-m-d H:i:s',$v);
+    		echo "用户：".$k.'  投票时间'.date('Y-m-d H:i:s',$v);
     	}
-    	$total=Redis::Scard($key);  // 统计投票总人数
-    	echo "投票总人数：".$total;
+    	// $total=Redis::Scard($key);  // 集合统计投票总人数
+        echo "<hr>";
+    	echo "   投票总人数：  ".$total;
     	echo "<hr>";
     	echo '<pre>';print_r($numbers);echo '</pre>';
 
