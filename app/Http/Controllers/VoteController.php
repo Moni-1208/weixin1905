@@ -27,7 +27,7 @@ class VoteController extends Controller
     	if(Redis::zrank($key,$user_info['openid'])){
     		echo "已经投过票了";
     	}else{
-	    	Redis::zadd($key,time(),$openid);
+	    	Redis::Zadd($key,time(),$openid);
     	}
 
     	$total=Redis::zCard($key); // 有序集合获取总人数
@@ -36,7 +36,7 @@ class VoteController extends Controller
     	echo'<pre>';print_r($numbers);echo '</pre>'; // die; // 获取所有投票人的openid
     	// foreach 是干什么用的？？？
     	foreach ($numbers as $k => $v) {
-    		echo "用户：".$k.'  投票时间'.date('Y-m-d H:i:s',$v);
+    		echo "用户：".$k.'  投票时间'.date('Y-m-d H:i:s',$v).'<br>';
     	}
     	// $total=Redis::Scard($key);  // 集合统计投票总人数
         echo "<hr>";
