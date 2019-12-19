@@ -11,13 +11,16 @@ class VoteController extends Controller
     //
     public function index()
     {
-    	// echo'<pre>'.'  接受的 GET'.'<br>';print_r($_GET);echo '</pre>';
     	$code=$_GET['code'];
     	// 获取access_token
     	$data=$this->getAccessToken($code);
-    	// print_r($data);die;
     	// 获取用户信息
     	$user_info=$this->getUserInfo($data['access_token'],$data['openid']);
+        // hash保存用户信息
+        $userinfo_key='h:u:'.$data['openid'];
+        // hash 存入值
+        Redis::hMset($userinfo_key,$user_info);
+
     	// 处理业务逻辑  
     	// TODO 判断是否已经投过  使用redis 集合 或 有序集合
     	$openid=$user_info['openid'];
@@ -39,7 +42,8 @@ class VoteController extends Controller
     	$numbers=Redis::zRange($key,0,-1,true);
     	// foreach 循环用户
     	foreach ($numbers as $k => $v) {
-    		echo "用户：".$k.'  投票时间'.date('Y-m-d H:i:s',$v).'<br>';
+            $u_k='h:u:'.$k;
+    		$u = Redis::hMget($u_k,['openid','nickname','sex','headimgurl']);
     	}
 
         
@@ -78,4 +82,27 @@ class VoteController extends Controller
 
     	return $data;
     }
+
+    /**
+     * hash 添加值  √
+     */
+    public function hashTest()
+    {
+        $uid=1000;
+        $key='h:user_info:uid'.$uid;
+        $user_info=[
+            'uid' => $uid,
+            'user_name' => 'xiaobai',
+            'email' => 'moni1208@163.com',
+            'age' => 19,
+            'sex' => 1
+        ];
+
+        Redis::hMset($key,$user_info);
+        // die;
+        echo "<hr>";
+        $u=Redis::hGetAll($key);
+        echo '<pre>'; print_r($u); echo "</pre>";
+    }
+
 }

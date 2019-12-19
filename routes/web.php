@@ -57,5 +57,8 @@ Route::get('wx/getAccessToken',"Weixin\WxController@getAccessToken");
 Route::get('wx/flushAccessToken',"Weixin\WxController@flushAccessToken");
 
 // 微信公众号
-Route::get('/vote',"VoteController@index");  // 微信投票
+Route::get('/vote',"VoteController@index");  // 微信投票hashTest
+
+// hash 添加值测试
+Route::get('/vote/hashTest',"VoteController@hashTest");
 
