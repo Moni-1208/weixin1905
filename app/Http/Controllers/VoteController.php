@@ -32,7 +32,7 @@ class VoteController extends Controller
 
     	$total=Redis::zCard($key); // 获取总人数
     	echo '<pre>';print_r($total);echo '</pre>';
-    	$members=Redis::zRRang($key,0,-1,true);
+    	$members=Redis::zRange($key,0,-1,true);
     	echo'<pre>';print_r($numbers);echo '</pre>'; // die; // 获取所有投票人的openid
     	// foreach 是干什么用的？？？
     	foreach ($numbers as $k => $v) {
