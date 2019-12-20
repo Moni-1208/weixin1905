@@ -12,7 +12,7 @@ class IndexController extends Controller
     public function index()
     {
     	$code=$_GET['code'];
-    	$data=getAccessToken($code);
+    	$data=$this->getAccessToken($code);
     	// 判断用户是否已存在
     	$openid=$data['openid'];
     	$u=WxUserModel::where(['openid'=>$openid])->first();
