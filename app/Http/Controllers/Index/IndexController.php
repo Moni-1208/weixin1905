@@ -20,7 +20,7 @@ class IndexController extends Controller
     		$user_info=$u->toArray();
     	}else{   		
     	// 获取用户信息
-    	$user_info=getUserInfo($data['access_token'],$data['openid']);
+    	$user_info=$this->getUserInfo($data['access_token'],$data['openid']);
     		// 入库
     		WxUserModel::insertGetId($user_info);
     	}
