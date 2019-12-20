@@ -11,9 +11,16 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/cc', function () {
     return view('welcome');
 });
+
+// 前台展示
+Route::get('/',"Index\IndexController@index");
+
+
+
+
 
 // 点我
 Route::get('test/add',"Test\TestController@add");
