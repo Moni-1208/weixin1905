@@ -46,6 +46,7 @@ Route::get('/wx',"Weixin\WxController@wechat");
 // 接受微信推送事件
 Route::post('/wx',"Weixin\WxController@receiv");
 
+// 创建菜单
 Route::get('/wx/menu',"Weixin\WxController@createMenu");
 
 //微信测试
