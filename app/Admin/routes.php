@@ -14,4 +14,7 @@ Route::group([
 
     $router->resource('users', WxUserController::class);
 
+    
+    $router->resource('goods', GoodsController::class);   // 商品管理
+
 });
