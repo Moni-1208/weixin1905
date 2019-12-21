@@ -4,14 +4,24 @@ namespace App\Http\Controllers\Goods;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Model\GoodsModel;
 
 class IndexController extends Controller
 {
-    public function detail()
+	/**
+     * 商品详情页
+    */
+    public function detail(Request $request)
     {
-    	/**
-    	 * 商品详情页
-    	 */
-    	return view('goods.detail');
+		$goods_id=$request->input('id');
+		// dd($goods_id);
+		// echo $goods_id;die;
+		$goods=GoodsModel::find($goods_id);
+		// dd($goods);die;
+		// echo print_r($goods->toArray());
+		$data=[
+			'goods'=>$goods
+		];
+    	return view('goods.detail',$data);
     }
 }
