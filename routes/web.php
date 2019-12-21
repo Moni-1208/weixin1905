@@ -15,8 +15,13 @@ Route::get('/cc', function () {
     return view('welcome');
 });
 
+// 微商城
+
 // 前台展示
 Route::get('/',"Index\IndexController@index");
+
+// 后台详情
+Route::get('/goods/detail',"Goods\IndexController@detail");
 
 
 
