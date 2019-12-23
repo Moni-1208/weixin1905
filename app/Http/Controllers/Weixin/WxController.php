@@ -1,4 +1,4 @@
- <?php
+<?php
 
 namespace App\Http\Controllers\Weixin;
 
@@ -69,6 +69,7 @@ class WxController extends Controller
         if($event=='subscribe'){
             //判断用户是否已存在
             $u = WxUserModel::where(['openid'=>$openid])->first();
+            // echo $u;die;
             if($u){
                 $msg = '欢迎回来';
                 $xml = '<xml>
@@ -82,6 +83,7 @@ class WxController extends Controller
             }else{
                 //获取用户信息 zcza
                 $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->access_token.'&openid='.$openid.'&lang=zh_CN';
+                // echo $url;die;
                 $user_info = file_get_contents($url);       //
                 $u = json_decode($user_info,true);
                 //echo '<pre>';print_r($u);echo '</pre>';die;
@@ -106,33 +108,40 @@ class WxController extends Controller
 </xml>';
                 echo $xml;
             }
-        }elseif($event=='CLICK'){           // 菜单点击事件
+        }elseif($event=='CLICK'){  // 菜单点击事件
+            // 获取天气
             if($xml_obj->EventKey=='weather'){
-                //如果是 获取天气
-                //请求第三方接口 获取天气
-                $weather_api = 'https://free-api.heweather.net/s6/weather/now?location=beijing&key=d957029d5931428f8eef6ba241aefdd7';
-                $weather_info = file_get_contents($weather_api);
-                $weather_info_arr = json_decode($weather_info,true);
-                $cond_txt = $weather_info_arr['HeWeather6'][0]['now']['cond_txt'];
-                $tmp = $weather_info_arr['HeWeather6'][0]['now']['tmp'];
-                $wind_dir = $weather_info_arr['HeWeather6'][0]['now']['wind_dir'];
-                $msg = $cond_txt . ' 温度： '.$tmp . ' 风向： '. $wind_dir;
-                $response_xml = '<xml>
-  <ToUserName><![CDATA['.$openid.']]></ToUserName>
-  <FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName>
-  <CreateTime>'.time().'</CreateTime>
-  <MsgType><![CDATA[text]]></MsgType>
-  <Content><![CDATA['. date('Y-m-d H:i:s') .  $msg .']]></Content>
-</xml>';
-                echo $response_xml;
+                // 请求第三方接口 获取天气
+                $weather_api='https://free-api.heweather.net/s6/weather/now?location=beijing&key=aca710f95e1c4ba4a4ea83152c02b194';
+                $weather_info=file_get_contents($weather_api);
+                $weather_info_arr=json_decode($weather_info,true);
+                $cond_txt=$weather_info_arr['HeWeather6'][0]['now']['cond_txt'];
+                // 温度
+                $tmp=$weather_info_arr['HeWeather6'][0]['now']['tmp'];
+                // 风向
+                $wind_dir=$weather_info_arr['HeWeather6'][0]['now']['wind_dir'];
+
+                $msg='天气:'.$cond_txt.' 温度:'.$tmp.' 风向:'.$wind_dir;
+                $response_xml='<xml>
+                <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                <FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName>
+                <CreateTime>'.time().'</CreateTime>
+                <MsgType><![CDATA[text]]></MsgType>
+                <Content><![CDATA['.date('Y-m-d H:i:s').$msg.']]></Content>
+              </xml>';
+              echo $response_xml;
             }
         }
+
+
         // 判断消息类型
         $msg_type = $xml_obj->MsgType;
+        // echo $msg_type;die;
         $touser = $xml_obj->FromUserName;       //接收消息的用户openid
         $fromuser = $xml_obj->ToUserName;       // 开发者公众号的 ID
         $time = time();
-        $media_id = $xml_obj->MediaId;
+        $media_id=$xml_obj->MediaId;
+        // dd($media_id);die;
         if($msg_type=='text'){
             $content = date('Y-m-d H:i:s') . $xml_obj->Content;
             $response_text = '<xml>
@@ -142,28 +151,15 @@ class WxController extends Controller
   <MsgType><![CDATA[text]]></MsgType>
   <Content><![CDATA['.$content.']]></Content>
 </xml>';
-//            $response_text = '<xml>
-//  <ToUserName><![CDATA['.$touser.']]></ToUserName>
-//  <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
-//  <CreateTime>'.time().'</CreateTime>
-//  <MsgType><![CDATA[news]]></MsgType>
-//  <ArticleCount>1</ArticleCount>
-//  <Articles>
-//    <item>
-//      <Title><![CDATA[作业做完了吗！]]></Title>
-//      <Description><![CDATA[作业做完了吗！]]></Description>
-//      <PicUrl><![CDATA[picurl]]></PicUrl>
-//      <Url><![CDATA[url]]></Url>
-//    </item>
-//  </Articles>
-//</xml>';
-            echo $response_text;            // 回复用户消息
+            // 回复用户消息
+            echo $response_text;
+
             // TODO 消息入库
-        }elseif($msg_type=='image'){    // 图片消息
+        }elseif($msg_type=='image'){  //图片消息
             // TODO 下载图片
             $this->getMedia2($media_id,$msg_type);
-            // TODO 回复图片
-            $response = '<xml>
+            // TODO  回复图片
+            $response='<xml>
   <ToUserName><![CDATA['.$touser.']]></ToUserName>
   <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
   <CreateTime>'.time().'</CreateTime>
@@ -173,34 +169,32 @@ class WxController extends Controller
   </Image>
 </xml>';
             echo $response;
-        }elseif($msg_type=='voice'){          // 语音消息
-            // 下载语音
+        }elseif ($msg_type=='voice') {  // 语音消息
+            // TODO  下载语音
             $this->getMedia2($media_id,$msg_type);
-            // TODO 回复语音
-            $response = '<xml>
+            // TODO  回复语音
+            $response='<xml>
   <ToUserName><![CDATA['.$touser.']]></ToUserName>
   <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
   <CreateTime>'.time().'</CreateTime>
   <MsgType><![CDATA[voice]]></MsgType>
-  <Voice>
+  <Image>
     <MediaId><![CDATA['.$media_id.']]></MediaId>
-  </Voice>
+  </Image>
 </xml>';
             echo $response;
-        }elseif($msg_type=='video'){
-            // 下载小视频
+        }elseif ($msg_type=='video') {  // 视频消息
+            // TODO  下载小视频
             $this->getMedia2($media_id,$msg_type);
-            // 回复
-            $response = '<xml>
+            // TODO  回复小视频
+            $response='<xml>
   <ToUserName><![CDATA['.$touser.']]></ToUserName>
   <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
   <CreateTime>'.time().'</CreateTime>
   <MsgType><![CDATA[video]]></MsgType>
-  <Video>
+  <Image>
     <MediaId><![CDATA['.$media_id.']]></MediaId>
-    <Title><![CDATA[测试]]></Title>
-    <Description><![CDATA[不可描述]]></Description>
-  </Video>
+  </Image>
 </xml>';
             echo $response;
         }
@@ -216,46 +210,57 @@ class WxController extends Controller
         $log_file = 'wx_user.log';
         file_put_contents($log_file,$json_str,FILE_APPEND);
     }
+
+
     /**
-     * 获取素材
+     * 图片 获取素材
      */
     public function getMedia()
     {
-        $media_id = 'MvV4Gy3hH5uSB4XJyYj1apLi-_2xVPEf4eyfg_CWpiEOjhnmIkQOZ5uvxOW1d-8D';
-        $url = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->access_token.'&media_id='.$media_id;
-        //获取素材内容
-        $data = file_get_contents($url);
-        // 保存文件
-        $file_name = date('YmdHis').mt_rand(11111,99999) . '.amr';
-        file_put_contents($file_name,$data);
-        echo "下载素材成功";echo '</br>';
-        echo "文件名： ". $file_name;
+        $media_id = 'oYtxIt0WcMTSZnseMC_IMOMlXe1M';
+        $url ='https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->access_token.'&media_id='.$media_id;
+        // 下载图片
+        $img = file_get_contents($url);
+        // 保存图片
+        $file_name=date('YmdHis').mt_rand(1111,9999).'.amr';
+        file_put_contents($file_name, $img);
+        echo "图片下载成功";
+        echo "文件名：".$file_name;
     }
-    protected function getMedia2($media_id,$media_type)
+
+    /**
+     * 获取素材 
+     */
+    public function getMedia2($media_id,$msg_type)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->access_token.'&media_id='.$media_id;
-        //获取素材内容
+        // 获取素材内容
+        // echo $url;die;
         $client = new Client();
-        $response = $client->request('GET',$url);
-        //获取文件扩展名
+        // dd($client);die;
+        $response=$client->request('GET',$url);
+        // dd($response);die;
+        // 获取文件 扩展 名
         $f = $response->getHeader('Content-disposition')[0];
         $extension = substr(trim($f,'"'),strpos($f,'.'));
-        //获取文件内容
-        $file_content = $response->getBody();
+        // 获取文件内容 
+        $file_content=$response->getBody();
+
         // 保存文件
         $save_path = 'wx_media/';
-        if($media_type=='image'){       //保存图片文件
+        if($msg_type=='image'){       //保存图片文件
             $file_name = date('YmdHis').mt_rand(11111,99999) . $extension;
             $save_path = $save_path . 'imgs/' . $file_name;
-        }elseif($media_type=='voice'){  //保存语音文件
+        }elseif($msg_type=='voice'){  //保存语音文件
             $file_name = date('YmdHis').mt_rand(11111,99999) . $extension;
             $save_path = $save_path . 'voice/' . $file_name;
-        }elseif($media_type=='video')
+        }elseif($msg_type=='video')
         {
             $file_name = date('YmdHis').mt_rand(11111,99999) . $extension;
             $save_path = $save_path . 'video/' . $file_name;
         }
         file_put_contents($save_path,$file_content);
+        echo "文件保存成功：".$save_path;
     }
     
 
