@@ -17,4 +17,7 @@ Route::group([
     
     $router->resource('goods', GoodsController::class);   // 商品管理
 
+
+    $router->get('/wxsendmsg', 'WxMsgController@sendMsg');
+
 });

@@ -369,7 +369,7 @@
 				<img src="/storage/{{$goods->img}}" alt="">
 				<h5>蓝天</h5>
 				<div class="price">{{$goods->price}} <span>$28</span></div>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam eaque in non delectus, error iste veniam commodi mollitia, officia possimus, repellendus maiores doloribus provident. Itaque, ab perferendis nemo tempore! Accusamus</p>
+				<p>{!!$goods->desc!!}</p>
 				<button type="button" class="btn button-default">ADD TO CART</button>
 			</div>
 			<div class="review">
