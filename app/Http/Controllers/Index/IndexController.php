@@ -34,10 +34,13 @@ class IndexController extends Controller
             'nonceStr'=>$nonceStr
         ];
         $ticket=WxUserModel::getJsapiTicket(); // 获取jsapi_ticket
-        $url=$_SERVER['APP+URL'].$_SERVER['REQUEST_URL'];; //dangqianURL
+        $url=$_SERVER['APP_URL'].$_SERVER['REQUEST_URL'];; //当前URL
+        $jsapi_signature = WxUserModel::jsapiSign($ticket,$url,$wx_config);
+        $wx_config['signature']=$jsapi_signature;
     	// 取头像
     	$data=[
-    		'u'=>$user_info
+    		'u'=>$user_info,
+            'wx_config'=>$wx_config
     	];
     	return view('index.index',$data);
     }
