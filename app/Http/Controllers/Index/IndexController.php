@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Model\WxUserModel;
+use Illuminate\Support\Str;
 
 class IndexController extends Controller
 {
@@ -24,6 +25,16 @@ class IndexController extends Controller
     		// 入库
     		WxUserModel::insertGetId($user_info);
     	}
+
+        // 微信配置
+        $nonceStr=Str::random(8);
+        $signature=[
+            'appId'=>'wxe10b6a253c208edb',
+            'timestamp'=>time(),
+            'nonceStr'=>$nonceStr
+        ];
+        $ticket=WxUserModel::getJsapiTicket(); // 获取jsapi_ticket
+        $url=$_SERVER['APP+URL'].$_SERVER['REQUEST_URL'];; //dangqianURL
     	// 取头像
     	$data=[
     		'u'=>$user_info

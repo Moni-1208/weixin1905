@@ -75,3 +75,6 @@ Route::get('/vote',"VoteController@index");  // 微信投票hashTest
 // hash 添加值测试
 Route::get('/vote/hashTest',"VoteController@hashTest");
 
+// 生成二维码
+Route::get('Wx/qrcode',"Weixin\WxQRController@qrcode");
+

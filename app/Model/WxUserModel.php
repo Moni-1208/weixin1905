@@ -4,10 +4,37 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Support\Facades\Redis;
+
 class WxUserModel extends Model
 {
 	// 数据库名称
     protected $table = 'p_wx_users';
     // 设置主键
     protected $primaryKey  = 'uid';
+
+    // 获取access_token
+    public static function getAccessToken()
+    {
+        $key = 'wx_access_token';
+        $access_token = Redis::get($key);
+        if($access_token){
+            return $access_token;
+        }
+        $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxe10b6a253c208edb&secret=0b5c451ab2ee2724d44b177a49bedb4b';
+        $data_json = file_get_contents($url);
+        $arr = json_decode($data_json,true);
+        Redis::set($key,$arr['access_token']);
+        Redis::expire($key,3600);
+        return $arr['access_token'];
+    }
+
+    /**
+     * 计算 jspai签名
+     */
+    public static function jsapiSign($ticket,$url,$param)
+    {
+        $string1="jsapi_ticket={$ticket}&noncestr={$param['noncestr']}&timestamp={$param['timestamp']}&url".$url;
+        return sha1($string1);
+    } 
 }
