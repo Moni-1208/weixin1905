@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Model\WxUserModel;
 use Illuminate\Support\Str;
 
+use App\Model\CuController;
+
 class IndexController extends Controller
 {
     public function index()
@@ -50,7 +52,43 @@ class IndexController extends Controller
      */
     public function curriculum()
     {
-        return view('index.curriculum');
+        $data=CuController::paginate(10);
+        
+        return view('index.curriculum',['data'=>$data]);
+    }
+
+    /**
+     * 添加课程 
+     */
+    public function save(Request $request)
+    {
+        $list=$request->except('_token');
+        // dd($list);list
+        $res=CuController::insertGetId($list);
+        if($res){
+            echo "<script>alert('添加课程成功');location.href='/curriculum';</script>";exit;
+        }
+    }
+
+    // 显示编辑视图
+    public function edit($id)
+    {
+        $data=CuController::where('c_id',$id)->first();
+
+        return view('index.edit',['data'=>$data]);
+    }
+
+    // 执行编辑
+    public function update(Request $request, $id)
+    {
+        $post=$request->except('_token');
+        $res=CuController::where('c_id',$id)->update($post);
+        if($res){
+            // echo "修改成功";
+            return redirect('/curriculum');
+        }else{
+            echo "修改失败";
+        }
     }
 
     /**

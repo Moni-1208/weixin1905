@@ -5,7 +5,7 @@
 	<title></title>
 </head>
 <body>
-	<form action="{{url('save')}}" method="post">
+	<form action="{{url('update/'.$data->c_id)}}" method="post">
 		第一节课：
 			<select name="c_one">
 				<option>php</option>
@@ -36,27 +36,5 @@
 		<br>
 		<input type="submit" name="">
 	</form>
-
-	<table>
-		<tr>
-			<td>ID</td>
-			<td>第一节课</td>
-			<td>第二节课</td>
-			<td>第三节课</td>
-			<td>第四节课</td>
-			<td>操作</td>
-		</tr>
-		@foreach($data as $v)
-		<tr>
-			<td>{{$v->c_id}}</td>
-			<td>{{$v->c_one}}</td>
-			<td>{{$v->c_tow}}</td>
-			<td>{{$v->c_three}}</td>
-			<td>{{$v->c_four}}</td>
-			<td><a href="{{url('/edit/'.$v->c_id)}}">修改</a></td>
-		</tr>
-		@endforeach
-	</table>
-
 </body>
 </html>

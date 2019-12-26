@@ -26,6 +26,13 @@ Route::get('/goods/detail',"Goods\IndexController@detail");
 // curriculum  选择课程
 Route::get('/curriculum',"Index\IndexController@curriculum");
 
+// curriculum  添加课程
+Route::post('/save',"Index\IndexController@save");
+
+Route::get('/edit/{id}',"Index\IndexController@edit");
+
+Route::post('/update/{id}',"Index\IndexController@update");
+
 
 
 // 点我
