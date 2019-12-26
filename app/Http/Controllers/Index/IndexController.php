@@ -27,23 +27,23 @@ class IndexController extends Controller
     	}
 
         // 微信配置
-        $nonceStr=Str::random(8);
-        $signature=[
-            'appId'=>'wxe10b6a253c208edb',
-            'timestamp'=>time(),
-            'nonceStr'=>$nonceStr
-        ];
-        $ticket=WxUserModel::getJsapiTicket(); // 获取jsapi_ticket
-        $url=$_SERVER['APP_URL'].$_SERVER['REQUEST_URI'];; //当前URL
-        $jsapi_signature = WxUserModel::jsapiSign($ticket,$url,$wx_config);
-        $wx_config['signature']=$jsapi_signature;
+        // $nonceStr=Str::random(8);
+        // $signature=[
+        //     'appId'=>'wxe10b6a253c208edb',
+        //     'timestamp'=>time(),
+        //     'nonceStr'=>$nonceStr
+        // ];
+        // $ticket=WxUserModel::getJsapiTicket(); // 获取jsapi_ticket
+        // $url=$_SERVER['APP_URL'].$_SERVER['REQUEST_URI'];; //当前URL
+        // $jsapi_signature = WxUserModel::jsapiSign($ticket,$url,$wx_config);
+        // $wx_config['signature']=$jsapi_signature;
     	// 取头像
     	$data=[
     		'u'=>$user_info,
-            'wx_config'=>$wx_config
+            // 'wx_config'=>$wx_config
     	];
     	return view('index.index',$data);
-    }
+    } 
 
     /**
      *  获取 access_token
