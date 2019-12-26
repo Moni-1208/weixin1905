@@ -1,0 +1,1 @@
+curriculum.blade.php

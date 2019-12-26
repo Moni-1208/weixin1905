@@ -46,6 +46,14 @@ class IndexController extends Controller
     } 
 
     /**
+     * 选择课程 
+     */
+    public functio curriculum()
+    {
+        return view('index.curriculum');
+    }
+
+    /**
      *  获取 access_token
      */
     protected function getAccessToken($code)

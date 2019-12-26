@@ -23,7 +23,8 @@ Route::get('/',"Index\IndexController@index");
 // 后台详情
 Route::get('/goods/detail',"Goods\IndexController@detail");
 
-
+// curriculum  选择课程
+Route::get('/curriculum',"Index\IndexController@curriculum");
 
 
 
