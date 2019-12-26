@@ -48,7 +48,7 @@ class IndexController extends Controller
     /**
      * 选择课程 
      */
-    public functio curriculum()
+    public function curriculum()
     {
         return view('index.curriculum');
     }
