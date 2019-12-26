@@ -97,7 +97,7 @@ class WxController extends Controller
                 ];
                 //openid 入库
                 $uid = WxUserModel::insertGetId($user_data);
-                $msg = "谢谢关注";
+                $msg = "欢迎".$u['nickname']."同学进入选课系统";
                 //回复用户关注
                 $xml = '<xml>
   <ToUserName><![CDATA['.$openid.']]></ToUserName>
@@ -282,33 +282,48 @@ class WxController extends Controller
 
         $url2='http://1905dongbaixue.comcto.com/';
 
+        $url3='http://1905dongbaixue.comcto.com/curriculum';
+
         // 授权后跳转页面
         $redirect_url=urlencode($url);  
 
-        $redirect_url2=urlencode($url2);  
+        $redirect_url2=urlencode($url2);
+
+        $redirect_url3=urlencode($url3);
 
         // 创建自定义菜单的接口地址
         $url='https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$this->access_token;
         $menu = [
             'button' => [
-
                 [
                     'type'=>'click',
-                    'name'=>'获取天气',
-                    'key'=>'weather'
+                    'name'=>'查看课程',
+                    'key'=>'cc'
                 ],
-                
                 [
                     'type'=>'view',
-                    'name'=>'投票',
-                    'url'=>'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe10b6a253c208edb&redirect_uri='.$redirect_url.'&response_type=code&scope=snsapi_userinfo&state=1905A#wechat_redirect'
-                ],
-                
-                [
-                    'type'=>'view',
-                    'name'=>'商城',
-                    'url'=>'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe10b6a253c208edb&redirect_uri='.$redirect_url2.'&response_type=code&scope=snsapi_userinfo&state=1905A#wechat_redirect'
+                    'name'=>'课程管理',
+                    'url'=>'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe10b6a253c208edb&redirect_uri='.$redirect_url3.'&response_type=code&scope=snsapi_userinfo&state=weixin1905#wechat_redirect'
                 ]
+                
+
+                // [
+                //     'type'=>'click',
+                //     'name'=>'获取天气',
+                //     'key'=>'weather'
+                // ],
+                
+                // [
+                //     'type'=>'view',
+                //     'name'=>'投票',
+                //     'url'=>'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe10b6a253c208edb&redirect_uri='.$redirect_url.'&response_type=code&scope=snsapi_userinfo&state=1905A#wechat_redirect'
+                // ],
+                
+                // [
+                //     'type'=>'view',
+                //     'name'=>'商城',
+                //     'url'=>'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe10b6a253c208edb&redirect_uri='.$redirect_url2.'&response_type=code&scope=snsapi_userinfo&state=1905A#wechat_redirect'
+                // ]
             ],
         ];
         $menu_json=json_encode($menu,JSON_UNESCAPED_UNICODE);
